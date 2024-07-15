@@ -36,15 +36,15 @@ public class ForecastController {
 
 	/**
 	 * @Description - This api is to retrieve the forecast for the given Forecast Office Id and co-ordinates
-	 * @param wfo
+	 * @param officeId
 	 * @param gridX
 	 * @param gridY
 	 * @return
 	 */
-	@GetMapping("/{wfo}/{gridX},{gridY}/forecast")
+	@GetMapping("/{officeId}/{gridX},{gridY}/forecast")
 	@Tag(name = "Weather Forecast", description = "To get the forecast for the grid location")
 	@Operation(description = "Get daily grid forecast", parameters = {
-			@Parameter(name = "wfo", in = ParameterIn.PATH, required = true, description = "Office location"),
+			@Parameter(name = "officeId", in = ParameterIn.PATH, required = true, description = "Office location"),
 			@Parameter(name = "gridX", in = ParameterIn.PATH, required = true, description = "Grid latitude co-ordinates"),
 			@Parameter(name = "gridY", in = ParameterIn.PATH, required = true, description = "Grid longitude co-ordinates") 
 			})
@@ -55,11 +55,11 @@ public class ForecastController {
 			@ApiResponse(responseCode = "500", description = "Server Error", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) }) })
 	public Mono<WeatherForecastResponse> getForecast(
-			@PathVariable("wfo") @Pattern(regexp = "^[a-zA-Z]+$", message = "wfo cannot be blank") String wfo,
+			@PathVariable("officeId") @Pattern(regexp = "^[a-zA-Z]+$", message = "officeId cannot be blank") String officeId,
 			@PathVariable("gridX") @Positive(message = "GridX cannot be blank") String gridX,
 			@PathVariable("gridY") @Positive(message = "GridY cannot be blank") String gridY) 
 			{
 		log.info("Weather forest information returned.");
-		return weatherService.getDailyForecast(wfo, gridX, gridY);
+		return weatherService.getDailyForecast(officeId, gridX, gridY);
 	}
 }
