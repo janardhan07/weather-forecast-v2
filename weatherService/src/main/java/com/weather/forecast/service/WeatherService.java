@@ -73,13 +73,13 @@ public class WeatherService {
 	/**
 	 * This method will call the down stream service to get the daily forecast
 	 * 
-	 * @param wfo
+	 * @param officeId
 	 * @param gridX
 	 * @param gridY
 	 * @return
 	 */
-	public Mono<WeatherForecastResponse> getDailyForecast(String wfo, String gridX, String gridY) {
-		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path(gridEndPoint).buildAndExpand(wfo, gridX, gridY)
+	public Mono<WeatherForecastResponse> getDailyForecast(String officeId, String gridX, String gridY) {
+		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path(gridEndPoint).buildAndExpand(officeId, gridX, gridY)
 				.toUri();
 		Mono<WeatherForecastResponse> downStreamResponse = webClient.get().uri(uri).retrieve()
 				.bodyToMono(WeatherForecastResponse.class);
