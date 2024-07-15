@@ -30,16 +30,16 @@ class WeatherServiceApplicationTests {
 
     @Test
     public void testForecastEndpoint() {
-        String wfo = "wfo";
+        String officeId = "officeId";
         String gridX = "gridX";
         String gridY = "gridY";
 
         WeatherForecastResponse mockWeatherResponse = new WeatherForecastResponse(); // Create mock response data
 
-        when(weatherService.getDailyForecast(wfo, gridX, gridY))
+        when(weatherService.getDailyForecast(officeId, gridX, gridY))
                 .thenReturn(Mono.just(mockWeatherResponse));
 
-        Mono<WeatherForecastResponse> responseMono = weatherServiceController.getForecast(wfo, gridX, gridY);
+        Mono<WeatherForecastResponse> responseMono = weatherServiceController.getForecast(officeId, gridX, gridY);
 
         StepVerifier.create(responseMono)
                 .expectNext(mockWeatherResponse)
