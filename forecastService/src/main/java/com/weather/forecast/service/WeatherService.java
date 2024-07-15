@@ -34,9 +34,9 @@ public class WeatherService {
 	@Value("${weather.api.gridendpoint}")
 	private String gridEndPoint;
 
-	public Mono<WeatherForecastResponse> getDailyForecast(String wfo, String gridX, String gridY) {
+	public Mono<WeatherForecastResponse> getDailyForecast(String officeId, String gridX, String gridY) {
 		try {
-			URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path(gridEndPoint).buildAndExpand(wfo, gridX, gridY)
+			URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path(gridEndPoint).buildAndExpand(officeId, gridX, gridY)
 					.toUri();
 			Mono<GridForecast> downStreamResponse = webClient.get().uri(uri).retrieve().bodyToMono(GridForecast.class)
 					.switchIfEmpty(Mono.error(new WeatherServiceException(Constants.DOWN_STREAM_NO_DATA_ERROR_MSG)))
